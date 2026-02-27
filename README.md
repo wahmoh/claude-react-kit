@@ -20,7 +20,7 @@ This kit was born from a **160+ commit, 4,377-file architectural refactor** wher
 
 ## The Solution
 
-A set of `CLAUDE.md` + `.claude/` configuration files that work together:
+`CLAUDE.md` + `.claude/` configuration files that work together:
 
 | Layer | What | How |
 |-------|------|-----|
@@ -32,49 +32,44 @@ A set of `CLAUDE.md` + `.claude/` configuration files that work together:
 
 **Key insight**: CLAUDE.md is *advisory* (Claude should follow it). Hooks are *deterministic* (they always run). Critical rules go in both.
 
-## Quick Start
+## Setup
 
-### Interactive setup (recommended)
-
-Run from your project root. Auto-detects your stack (framework, package manager, state management, testing) and customizes every file:
-
-```bash
-# From your project root:
-bash <(curl -s https://raw.githubusercontent.com/aleolidev/claude-react-kit/main/setup.sh)
-```
-
-Or if you have the repo cloned locally:
-
-```bash
-cd /path/to/your-project
-bash ~/Developer/templates/claude-react-kit/setup.sh
-```
-
-The setup will:
-1. Detect your framework (Next.js, Vite, Expo, React Native, CRA, Remix, Gatsby)
-2. Detect your package manager, state management, testing framework, and styling
-3. Let you confirm or override each detection
-4. Generate a customized `CLAUDE.md` with your actual build commands
-5. Configure `protect-files.sh` with your lock file and framework-specific patterns
-6. Update `settings.json` permissions for your package manager
-7. Enrich `state-management.md` with patterns for your specific libraries
-8. Adapt `architecture.md` route layer for your framework
-
-### Manual setup
+### 1. Copy the kit into your project
 
 ```bash
 git clone https://github.com/aleolidev/claude-react-kit.git /tmp/crk
-
 cp /tmp/crk/CLAUDE.md ./CLAUDE.md
 cp -r /tmp/crk/.claude/ ./.claude/
 chmod +x .claude/hooks/*.sh
-
-echo -e ".claude/.checkpoint.md\n.claude/settings.local.json" >> .gitignore
-
+echo -e "\n.claude/.checkpoint.md\n.claude/settings.local.json" >> .gitignore
 rm -rf /tmp/crk
-
-# Then edit CLAUDE.md with your actual build commands
 ```
+
+### 2. Run the setup skill
+
+Open Claude Code in your project and run:
+
+```
+/setup
+```
+
+Claude will:
+1. **Analyze your project** — reads `package.json`, `tsconfig.json`, framework configs, source directory structure, existing lint/format rules, state management patterns, and any existing `CLAUDE.md`
+2. **Present what it found** — framework, package manager, directory structure, state management, testing, styling
+3. **Ask only what it can't detect** — ambiguous conventions, architecture mapping preferences, what to keep from existing config
+4. **Generate customized files** — every rule, hook, and config file adapted to your real project:
+   - `CLAUDE.md` with your actual build commands and real directory structure
+   - `architecture.md` with your actual layer names and import boundaries
+   - `components.md` adapted to your styling approach (Tailwind, CSS Modules, StyleSheet, styled-components)
+   - `state-management.md` with patterns for your actual libraries
+   - `naming-conventions.md` extracted from your actual code conventions
+   - `validate-architecture.sh` using your real directory names
+   - `protect-files.sh` with your lock file and framework-specific patterns
+   - `settings.json` with permissions for your package manager
+   - `audit-architecture/SKILL.md` with grep patterns matching your structure
+   - `scaffold-feature/SKILL.md` adapted to your conventions
+
+No placeholders, no manual editing. Everything matches your project as it actually is.
 
 ## Architecture Enforced
 
@@ -87,17 +82,19 @@ app/pages/routes/  →  src/features/  →  src/shared/  →  src/design-system/
 
 Each layer can only import from layers to its right. Never left, never sideways between features.
 
+The `/setup` skill adapts this to your actual structure — if you use `app/` (Next.js/Expo), `pages/`, `screens/`, or something else entirely.
+
 ## What's Inside
 
 ### Rules (`.claude/rules/`)
 
 | File | Enforces |
 |------|----------|
-| `architecture.md` | 5-layer import boundaries, what belongs in each layer, when to extract to shared |
-| `components.md` | Folder structure, data flow (props-only), size limits (< 200 lines), deduplication |
+| `architecture.md` | Layer import boundaries, what belongs where, when to extract to shared |
+| `components.md` | Folder structure, data flow (props-only), size limits, deduplication |
 | `code-quality.md` | 7 anti-patterns: cross-imports, god components, barrel chains, dead code, naming collisions, business logic in design system, duplicate implementations |
-| `naming-conventions.md` | PascalCase for components, kebab-case for features, camelCase for hooks |
-| `state-management.md` | Pages fetch, components render, stores organized by scope |
+| `naming-conventions.md` | Consistent naming per file/directory type |
+| `state-management.md` | Data fetching at page level, stores by scope, library-specific patterns |
 | `session-management.md` | Post-compaction re-orientation protocol, quality invariants |
 
 All rules support **path-scoping** via frontmatter globs — they only activate when Claude edits matching files.
@@ -116,12 +113,13 @@ All rules support **path-scoping** via frontmatter globs — they only activate 
 
 | Skill | Usage | Action |
 |-------|-------|--------|
-| `audit-architecture` | `/audit-architecture` | Full codebase audit: cross-imports, oversized files, empty dirs, data fetching in components |
-| `scaffold-feature` | `/scaffold-feature user-profile` | Creates standard feature module structure |
+| `setup` | `/setup` | Analyze project and customize all config files for the real stack |
+| `audit-architecture` | `/audit-architecture` | Full codebase audit: cross-imports, oversized files, empty dirs, data fetching violations |
+| `scaffold-feature` | `/scaffold-feature user-profile` | Create a new feature module with the standard structure |
 
 ## How Compaction Resilience Works
 
-This is the core innovation. When Claude Code compacts context in a long session:
+When Claude Code compacts context in a long session:
 
 ```
 1. PreCompact hook     →  Saves git state to .checkpoint.md
@@ -156,6 +154,7 @@ your-project/
     │   ├── protect-files.sh               # File protection
     │   └── validate-architecture.sh       # Import boundary validation
     └── skills/
+        ├── setup/SKILL.md                 # Project analyzer + customizer
         ├── audit-architecture/SKILL.md    # Architecture auditor
         └── scaffold-feature/SKILL.md      # Feature scaffolder
 ```
@@ -164,8 +163,9 @@ your-project/
 
 ### Add project-specific rules
 
+Create new `.md` files in `.claude/rules/` with path-scoped frontmatter:
+
 ```markdown
-<!-- .claude/rules/api-patterns.md -->
 ---
 description: API patterns for this project
 globs:
@@ -176,10 +176,6 @@ globs:
 - All services use the shared HTTP client from core/network/
 - Service files: `{Verb}{Resource}Service.ts`
 ```
-
-### Add protected file patterns
-
-Edit `.claude/hooks/protect-files.sh` and add to the `PROTECTED_PATTERNS` array.
 
 ### Personal overrides
 
@@ -212,7 +208,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Areas where help is needed:
 - Vue.js / Svelte / Angular adaptations
 - Backend rule sets (Node.js, Python, Go)
 - Additional hooks for CI/CD patterns
-- Translations
 
 ## License
 
