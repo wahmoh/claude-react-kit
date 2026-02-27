@@ -20,7 +20,7 @@ This kit was born from a **160+ commit, 4,377-file architectural refactor** wher
 
 ## The Solution
 
-A set of `.claude/` configuration files that work together:
+A set of `CLAUDE.md` + `.claude/` configuration files that work together:
 
 | Layer | What | How |
 |-------|------|-----|
@@ -34,27 +34,47 @@ A set of `.claude/` configuration files that work together:
 
 ## Quick Start
 
+### Interactive setup (recommended)
+
+Run from your project root. Auto-detects your stack (framework, package manager, state management, testing) and customizes every file:
+
 ```bash
-# Clone the kit
-git clone https://github.com/YOUR_USERNAME/claude-react-kit.git /tmp/crk
-
-# Copy template files to your project
-cp /tmp/crk/template/CLAUDE.md ./CLAUDE.md
-cp -r /tmp/crk/template/.claude/ ./.claude/
-
-# Make hooks executable
-chmod +x .claude/hooks/*.sh
-
-# Add to .gitignore
-echo -e ".claude/.checkpoint.md\n.claude/settings.local.json" >> .gitignore
-
-# Clean up
-rm -rf /tmp/crk
+# From your project root:
+bash <(curl -s https://raw.githubusercontent.com/aleolidev/claude-react-kit/main/setup.sh)
 ```
 
-Then edit `CLAUDE.md` — replace the `## Commands` section with your actual build commands.
+Or if you have the repo cloned locally:
 
-Or click **"Use this template"** on GitHub to create a new repo with everything included.
+```bash
+cd /path/to/your-project
+bash ~/Developer/templates/claude-react-kit/setup.sh
+```
+
+The setup will:
+1. Detect your framework (Next.js, Vite, Expo, React Native, CRA, Remix, Gatsby)
+2. Detect your package manager, state management, testing framework, and styling
+3. Let you confirm or override each detection
+4. Generate a customized `CLAUDE.md` with your actual build commands
+5. Configure `protect-files.sh` with your lock file and framework-specific patterns
+6. Update `settings.json` permissions for your package manager
+7. Enrich `state-management.md` with patterns for your specific libraries
+8. Adapt `architecture.md` route layer for your framework
+
+### Manual setup
+
+```bash
+git clone https://github.com/aleolidev/claude-react-kit.git /tmp/crk
+
+cp /tmp/crk/CLAUDE.md ./CLAUDE.md
+cp -r /tmp/crk/.claude/ ./.claude/
+chmod +x .claude/hooks/*.sh
+
+echo -e ".claude/.checkpoint.md\n.claude/settings.local.json" >> .gitignore
+
+rm -rf /tmp/crk
+
+# Then edit CLAUDE.md with your actual build commands
+```
 
 ## Architecture Enforced
 
@@ -101,7 +121,7 @@ All rules support **path-scoping** via frontmatter globs — they only activate 
 
 ## How Compaction Resilience Works
 
-This is the core innovation:
+This is the core innovation. When Claude Code compacts context in a long session:
 
 ```
 1. PreCompact hook     →  Saves git state to .checkpoint.md
@@ -116,7 +136,7 @@ This is the core innovation:
 
 Result: consistent quality even after multiple compactions in marathon sessions.
 
-## File Structure
+## What Gets Installed
 
 ```
 your-project/
@@ -159,15 +179,7 @@ globs:
 
 ### Add protected file patterns
 
-Edit `.claude/hooks/protect-files.sh`:
-
-```bash
-PROTECTED_PATTERNS=(
-  ".env"
-  "package-lock.json"
-  "prisma/migrations"     # your patterns here
-)
-```
+Edit `.claude/hooks/protect-files.sh` and add to the `PROTECTED_PATTERNS` array.
 
 ### Personal overrides
 
@@ -208,6 +220,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Areas where help is needed:
 
 ---
 
-**Built with lessons from production React Native and Next.js projects.**
+**Built with hard-won lessons from production React Native and Next.js projects.**
 
 If this saved you from a painful refactor, consider giving it a star.
